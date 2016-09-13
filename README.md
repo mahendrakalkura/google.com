@@ -34,6 +34,8 @@ How to use?
 
 ```
 $ iex -S mix
-iex(1)> GoogleTranslateAPI.get_translated_string("...{key}...", "en", "fr", "Hello World")
+iex(1)> GoogleTranslateAPI.get_translated_string("...{a valid key}...", "en", "fr", "Hello World")
 {:ok, "Bonjour le monde"}
+iex(1)> GoogleTranslateAPI.get_translated_string("...{an invalid key}...", "en", "fr", "Hello World")
+{:error, 400}
 ```
