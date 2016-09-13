@@ -1,4 +1,4 @@
-defmodule GoogleTranslateAPI.Mixfile do
+defmodule GoogleCom.Mixfile do
   use Mix.Project
 
   def application do
@@ -20,7 +20,7 @@ defmodule GoogleTranslateAPI.Mixfile do
 
   def project do
     [
-      app: :google_translate_api,
+      app: :google_com,
       build_embedded: Mix.env == :prod,
       deps: deps(),
       elixir: "~> 1.3",

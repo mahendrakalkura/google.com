@@ -1,4 +1,4 @@
-defmodule GoogleTranslateAPI do
+defmodule GoogleCom do
   @moduledoc false
 
   require HTTPoison
