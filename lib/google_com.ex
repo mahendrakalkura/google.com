@@ -4,7 +4,7 @@ defmodule GoogleCom do
   require HTTPoison
   require URI
 
-  def get_translated_string(key, source, target, q) do
+  def query(key, source, target, q) do
     method = :get
     url = "https://www.googleapis.com/language/translate/v2"
     body = ""
@@ -18,22 +18,24 @@ defmodule GoogleCom do
     options = [
       {:params, params}
     ]
-    get_response(HTTPoison.request(method, url, body, headers, options))
+    response = parse_http(HTTPoison.request(method, url, body, headers, options))
+    response
   end
 
-  def get_response({:ok, %HTTPoison.Response{status_code: 200, body: body}}) do
-    get_response(body)
+  def parse_http({:ok, %HTTPoison.Response{status_code: 200, body: body}}) do
+    response = parse_json(body)
+    response
   end
 
-  def get_response({:ok, %HTTPoison.Response{status_code: status_code}}) do
+  def parse_http({:ok, %HTTPoison.Response{status_code: status_code}}) do
     {:error, status_code}
   end
 
-  def get_response({:error, %HTTPoison.Error{reason: reason}}) do
+  def parse_http({:error, %HTTPoison.Error{reason: reason}}) do
     {:error, reason}
   end
 
-  def get_response(body) do
+  def parse_json(body) do
     case JSX.decode(body) do
       {:ok, body} ->
         data = body["data"]

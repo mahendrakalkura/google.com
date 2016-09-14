@@ -43,8 +43,8 @@ How to use?
 
 ```
 $ iex -S mix
-iex(1)> GoogleCom.get_translated_string("...{a valid key}...", "en", "fr", "Hello World")
+iex(1)> GoogleCom.query("...{a valid key}...", "en", "fr", "Hello World")
 {:ok, "Bonjour le monde"}
-iex(1)> GoogleCom.get_translated_string("...{an invalid key}...", "en", "fr", "Hello World")
+iex(1)> GoogleCom.query("...{an invalid key}...", "en", "fr", "Hello World")
 {:error, 400}
 ```
