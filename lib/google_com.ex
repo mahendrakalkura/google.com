@@ -18,32 +18,36 @@ defmodule GoogleCom do
     options = [
       {:params, params}
     ]
-    response = parse_http(HTTPoison.request(method, url, body, headers, options))
-    response
+    result = parse_http(HTTPoison.request(method, url, body, headers, options))
+    result
   end
 
   def parse_http({:ok, %HTTPoison.Response{status_code: 200, body: body}}) do
-    response = parse_json(body)
-    response
+    result = JSX.decode(body)
+    result = parse_json(result)
+    result
   end
 
   def parse_http({:ok, %HTTPoison.Response{status_code: status_code}}) do
-    {:error, status_code}
+    result = {:error, status_code}
+    result
   end
 
   def parse_http({:error, %HTTPoison.Error{reason: reason}}) do
-    {:error, reason}
+    result = {:error, reason}
+    result
   end
 
-  def parse_json(body) do
-    case JSX.decode(body) do
-      {:ok, body} ->
-        data = body["data"]
-        translations = data["translations"]
-        translation = Enum.at(translations, 0)
-        {:ok, translation["translatedText"]}
-      {:error, reason} ->
-        {:error, reason}
-    end
+  def parse_json({ok: body}) do
+    data = body["data"]
+    translations = data["translations"]
+    translation = Enum.at(translations, 0)
+    result = {:ok, translation["translatedText"]}
+    result
+  end
+
+  def parse_json({:error, reason}) do
+    result = {:error, reason}
+    result
   end
 end
