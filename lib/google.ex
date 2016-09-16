@@ -1,4 +1,4 @@
-defmodule GoogleCom do
+defmodule Google do
   @moduledoc false
 
   require HTTPoison

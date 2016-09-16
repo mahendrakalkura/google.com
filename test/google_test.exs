@@ -1,7 +1,7 @@
-defmodule GoogleComTest do
+defmodule GoogleTest do
   @moduledoc false
 
   use ExUnit.Case, async: true
 
-  doctest GoogleCom
+  doctest Google
 end

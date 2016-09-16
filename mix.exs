@@ -1,4 +1,4 @@
-defmodule GoogleCom.Mixfile do
+defmodule Google.Mixfile do
   use Mix.Project
 
   def application() do
@@ -20,7 +20,7 @@ defmodule GoogleCom.Mixfile do
 
   def project() do
     [
-      app: :google_com,
+      app: :google,
       build_embedded: Mix.env == :prod,
       deps: deps(),
       elixir: "~> 1.3",
