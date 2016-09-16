@@ -38,7 +38,7 @@ defmodule GoogleCom do
     result
   end
 
-  def parse_json({ok: body}) do
+  def parse_json({:ok, body}) do
     data = body["data"]
     translations = data["translations"]
     translation = Enum.at(translations, 0)
