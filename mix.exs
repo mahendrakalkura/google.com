@@ -1,7 +1,7 @@
 defmodule GoogleCom.Mixfile do
   use Mix.Project
 
-  def application do
+  def application() do
     [
       applications: [
         :httpoison,
@@ -9,7 +9,7 @@ defmodule GoogleCom.Mixfile do
     ]
   end
 
-  def deps do
+  def deps() do
     [
       {:credo, "~> 0.4"},
       {:dogma, "~> 0.1"},
@@ -18,7 +18,7 @@ defmodule GoogleCom.Mixfile do
     ]
   end
 
-  def project do
+  def project() do
     [
       app: :google_com,
       build_embedded: Mix.env == :prod,
