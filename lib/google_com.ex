@@ -13,10 +13,10 @@ defmodule GoogleCom do
       {"key", key},
       {"source", source},
       {"target", target},
-      {"q", q}
+      {"q", q},
     ]
     options = [
-      {:params, params}
+      {:params, params},
     ]
     result = parse_http(HTTPoison.request(method, url, body, headers, options))
     result
