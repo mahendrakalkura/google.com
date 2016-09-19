@@ -20,7 +20,7 @@ defmodule Google.Mixfile do
 
   def project() do
     [
-      app: :google,
+      app: :google_translate,
       build_embedded: Mix.env == :prod,
       deps: deps(),
       elixir: "~> 1.3",
