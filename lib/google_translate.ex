@@ -5,44 +5,45 @@ defmodule GoogleTranslate do
   require URI
 
   def query(key, source, target, q) do
-    result = get_arguments(key, source, target, q)
-    result = http_poison(result)
-    result = parse_response(result)
-    result = parse_body(result)
-    result
+    arguments = get_arguments(key, source, target, q)
+    response = http_poison(arguments)
+    body = parse_response(response)
+    parse_body(body)
   end
 
-  def http_poison(result) do
-    result = HTTPoison.request(result["method"], result["url"], result["body"], result["headers"], result["options"])
-    result
+  def http_poison(arguments) do
+    HTTPoison.request(
+      arguments["method"],
+      arguments["url"],
+      arguments["body"],
+      arguments["headers"],
+      arguments["options"]
+    )
   end
 
-  def parse_response({:ok, %HTTPoison.Response{status_code: 200, body: body}}) do
-    result = JSX.decode(body)
-    result
+  def parse_response(
+    {:ok, %HTTPoison.Response{status_code: 200, body: body}}
+  ) do
+    JSX.decode(body)
   end
 
   def parse_response({:ok, %HTTPoison.Response{status_code: status_code}}) do
-    result = {:error, status_code}
-    result
+    {:error, status_code}
   end
 
   def parse_response({:error, %HTTPoison.Error{reason: reason}}) do
-    result = {:error, reason}
-    result
+    {:error, reason}
   end
 
   def parse_body({:ok, body}) do
     data = body["data"]
     translations = data["translations"]
     translation = Enum.at(translations, 0)
-    result = {:ok, translation["translatedText"]}
-    result
+    {:ok, translation["translatedText"]}
   end
 
   def parse_body({:error, reason}) do
-    result = {:error, reason}
-    result
+    {:error, reason}
   end
 
   def get_arguments(key, source, target, q) do
@@ -59,13 +60,12 @@ defmodule GoogleTranslate do
     options = [
       {:params, params},
     ]
-    result = %{
+    %{
       "method" => method,
       "url" => url,
       "body" => body,
       "headers" => headers,
       "options" => options,
     }
-    result
   end
 end
