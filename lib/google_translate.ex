@@ -1,4 +1,4 @@
-defmodule Google do
+defmodule GoogleTranslate do
   @moduledoc false
 
   require HTTPoison
