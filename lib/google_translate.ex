@@ -1,9 +1,6 @@
 defmodule GoogleTranslate do
   @moduledoc false
 
-  require HTTPoison
-  require URI
-
   def query(key, source, target, q) do
     arguments = get_arguments(key, source, target, q)
     response = http_poison(arguments)
