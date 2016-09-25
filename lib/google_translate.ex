@@ -8,6 +8,29 @@ defmodule GoogleTranslate do
     parse_body(body)
   end
 
+  def get_arguments(key, source, target, q) do
+    method = :get
+    url = "https://www.googleapis.com/language/translate/v2"
+    body = ""
+    headers = []
+    params = [
+      {"key", key},
+      {"source", source},
+      {"target", target},
+      {"q", q},
+    ]
+    options = [
+      {:params, params},
+    ]
+    %{
+      "method" => method,
+      "url" => url,
+      "body" => body,
+      "headers" => headers,
+      "options" => options,
+    }
+  end
+
   def http_poison(arguments) do
     HTTPoison.request(
       arguments["method"],
@@ -41,28 +64,5 @@ defmodule GoogleTranslate do
 
   def parse_body({:error, reason}) do
     {:error, reason}
-  end
-
-  def get_arguments(key, source, target, q) do
-    method = :get
-    url = "https://www.googleapis.com/language/translate/v2"
-    body = ""
-    headers = []
-    params = [
-      {"key", key},
-      {"source", source},
-      {"target", target},
-      {"q", q},
-    ]
-    options = [
-      {:params, params},
-    ]
-    %{
-      "method" => method,
-      "url" => url,
-      "body" => body,
-      "headers" => headers,
-      "options" => options,
-    }
   end
 end
