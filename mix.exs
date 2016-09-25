@@ -2,11 +2,7 @@ defmodule Google.Mixfile do
   use Mix.Project
 
   def application() do
-    [
-      applications: [
-        :httpoison,
-      ],
-    ]
+    [applications: [:httpoison]]
   end
 
   def deps() do
