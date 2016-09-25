@@ -41,28 +41,26 @@ defmodule GoogleTranslate do
     )
   end
 
-  def parse_response(
-    {:ok, %HTTPoison.Response{status_code: 200, body: body}}
-  ) do
-    JSX.decode(body)
+  def parse_response(response) do
+    case response do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        JSX.decode(body)
+      {:ok, %HTTPoison.Response{status_code: status_code}} ->
+        {:error, status_code}
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        {:error, reason}
+    end
   end
 
-  def parse_response({:ok, %HTTPoison.Response{status_code: status_code}}) do
-    {:error, status_code}
-  end
-
-  def parse_response({:error, %HTTPoison.Error{reason: reason}}) do
-    {:error, reason}
-  end
-
-  def parse_body({:ok, body}) do
-    data = body["data"]
-    translations = data["translations"]
-    translation = Enum.at(translations, 0)
-    {:ok, translation["translatedText"]}
-  end
-
-  def parse_body({:error, reason}) do
-    {:error, reason}
+  def parse_body(body) do
+    case body do
+      {:ok, contents} ->
+        data = contents["data"]
+        translations = data["translations"]
+        translation = Enum.at(translations, 0)
+        {:ok, translation["translatedText"]}
+      {:error, reason} ->
+        {:error, reason}
+    end
   end
 end
