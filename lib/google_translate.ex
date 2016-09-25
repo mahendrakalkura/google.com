@@ -47,8 +47,7 @@ defmodule GoogleTranslate do
         JSX.decode(body)
       {:ok, %HTTPoison.Response{status_code: status_code}} ->
         {:error, status_code}
-      {:error, %HTTPoison.Error{reason: reason}} ->
-        {:error, reason}
+      {:error, %HTTPoison.Error{reason: reason}} -> {:error, reason}
     end
   end
 
@@ -59,8 +58,7 @@ defmodule GoogleTranslate do
         translations = data["translations"]
         translation = Enum.at(translations, 0)
         {:ok, translation["translatedText"]}
-      {:error, reason} ->
-        {:error, reason}
+      {:error, reason} -> {:error, reason}
     end
   end
 end
