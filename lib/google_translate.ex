@@ -9,10 +9,6 @@ defmodule GoogleTranslate do
   end
 
   def get_arguments(key, source, target, q) do
-    method = :get
-    url = "https://www.googleapis.com/language/translate/v2"
-    body = ""
-    headers = []
     params = [
       {"key", key},
       {"source", source},
@@ -23,10 +19,10 @@ defmodule GoogleTranslate do
       {:params, params},
     ]
     %{
-      "method" => method,
-      "url" => url,
-      "body" => body,
-      "headers" => headers,
+      "method" => :get,
+      "url" => "https://www.googleapis.com/language/translate/v2",
+      "body" => "",
+      "headers" => [],
       "options" => options,
     }
   end
